@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -11,39 +11,39 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <style>
+      /* Light version — pale lilac ground, deep plum type */
       :root{
-        --bg:#FAF5EF;
-        --surface:#FFFDF9;
-        --blush:#F7E9E4;
-        --blush-2:#F3E2D9;
-        --ink:#402E28;
-        --muted:#8C7466;
-        --line:#EBDCD0;
-        --gold:#A9853F;
-        --gold-soft:#C6A15B;
-        --rose:#B76E79;
-        --rose-deep:#9E5563;
-        --rose-ink:#FFF7F3;
-        --shadow:0 18px 40px rgba(120,72,50,.14);
-        --bar-bg:rgba(255,253,249,.92);
+        --bg:#F7EEFA;
+        --surface:#FFF9FE;
+        --blush:#F1DFF6;
+        --blush-2:#E9CFF3;
+        --ink:#3B1D4E;
+        --muted:#7E6391;
+        --line:#E4CDEC;
+        --gold:#8B4FB8;
+        --gold-soft:#A874D6;
+        --rose:#C74B8C;
+        --rose-deep:#B23A7E;
+        --rose-ink:#FFF5FA;
+        --shadow:0 18px 40px rgba(90,40,130,.16);
+        --bar-bg:rgba(255,249,254,.92);
       }
-      @media (prefers-color-scheme: dark){
-        :root{
-          --bg:#1D1411;
-          --surface:#291D18;
-          --blush:#33231E;
-          --blush-2:#3B2822;
-          --ink:#F5E9DF;
-          --muted:#C4A894;
-          --line:#463128;
-          --gold:#D2AC72;
-          --gold-soft:#DDBE8C;
-          --rose:#D79CA6;
-          --rose-deep:#C98391;
-          --rose-ink:#2A1712;
-          --shadow:0 18px 40px rgba(0,0,0,.45);
-          --bar-bg:rgba(34,23,19,.92);
-        }
+      /* Dark version — the invert: deep plum ground, pale lilac type */
+      :root[data-theme="dark"]{
+        --bg:#241430;
+        --surface:#2F1B3E;
+        --blush:#3A2350;
+        --blush-2:#462A5E;
+        --ink:#F6EBFA;
+        --muted:#C9A8D8;
+        --line:#4A3064;
+        --gold:#B98AE0;
+        --gold-soft:#D3AFF2;
+        --rose:#F08FC0;
+        --rose-deep:#E56BA8;
+        --rose-ink:#2A1030;
+        --shadow:0 18px 40px rgba(0,0,0,.5);
+        --bar-bg:rgba(36,20,48,.92);
       }
       *{box-sizing:border-box}
       html{scroll-behavior:smooth}
@@ -52,6 +52,7 @@
         font-family:"Jost",system-ui,sans-serif;font-weight:300;
         font-size:17px;line-height:1.6;
         -webkit-font-smoothing:antialiased;
+        transition:background-color .3s ease,color .3s ease;
       }
       img{display:block;max-width:100%}
       a{color:inherit}
@@ -71,6 +72,22 @@
       .crumb .here{color:var(--ink)}
       .crumb .call-link{letter-spacing:.05em;text-transform:none;font-size:.92rem;color:var(--ink);text-decoration:none;font-weight:400;white-space:nowrap}
       .crumb .call-link:hover{color:var(--rose-deep)}
+      .crumb-actions{display:flex;align-items:center;gap:14px}
+
+      /* ---------- light / dark toggle ---------- */
+      .theme-toggle{
+        display:inline-flex;align-items:center;cursor:pointer;
+        font:inherit;font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:none;
+        color:var(--ink);background:var(--surface);border:1px solid var(--gold-soft);
+        border-radius:999px;padding:7px 15px;white-space:nowrap;
+        transition:border-color .15s ease,color .15s ease,background-color .3s ease;
+      }
+      .theme-toggle:hover{border-color:var(--rose);color:var(--rose-deep)}
+      .theme-toggle .opt{display:inline-flex;align-items:center;gap:7px}
+      .theme-toggle svg{width:15px;height:15px;flex:none}
+      .theme-toggle .opt-to-dark{display:none}
+      :root[data-theme="light"] .theme-toggle .opt-to-light{display:none}
+      :root[data-theme="light"] .theme-toggle .opt-to-dark{display:inline-flex}
 
       /* ---------- hero ---------- */
       .hero{padding:26px 0 10px;text-align:center}
@@ -98,7 +115,7 @@
         padding:14px 30px;border-radius:999px;transition:transform .15s ease,background .15s ease,color .15s ease;
       }
       .btn:active{transform:scale(.98)}
-      .btn-book{background:var(--rose-deep);color:var(--rose-ink);box-shadow:0 10px 24px rgba(158,85,99,.35)}
+      .btn-book{background:var(--rose-deep);color:var(--rose-ink);box-shadow:0 10px 24px rgba(178,58,126,.38)}
       .btn-book:hover{background:var(--rose)}
       .btn-ghost{border:1px solid var(--gold-soft);color:var(--ink);background:transparent}
       .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
@@ -140,11 +157,12 @@
       .gallery figure:hover img{transform:scale(1.04)}
       .gallery figcaption{
         position:absolute;left:0;right:0;bottom:0;padding:26px 14px 10px;
-        font-size:.86rem;letter-spacing:.05em;color:#FFF7F0;
-        background:linear-gradient(transparent,rgba(43,22,16,.72));
+        font-size:.86rem;letter-spacing:.05em;color:#FDF2FA;
+        background:linear-gradient(transparent,rgba(26,8,38,.75));
       }
       @media (prefers-reduced-motion: reduce){
         .gallery img{transition:none}
+        body{transition:none}
         html{scroll-behavior:auto}
       }
 
@@ -275,7 +293,19 @@
           <span class="sep" aria-hidden="true">›</span>
           <span class="here">Luxury Nails by Des</span>
         </nav>
-        <a class="call-link" href="tel:+13233795836">(323) 379-5836</a>
+        <div class="crumb-actions">
+          <a class="call-link" href="tel:+13233795836">(323) 379-5836</a>
+          <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="true" aria-label="Dark version on — switch to the light version">
+            <span class="opt opt-to-light">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+              Light
+            </span>
+            <span class="opt opt-to-dark">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+              Dark
+            </span>
+          </button>
+        </div>
       </div>
 
       <!-- HERO -->
@@ -653,6 +683,30 @@
       <a href="https://www.google.com/maps/search/?api=1&query=213+Beauty+Studio+412+W+Whittier+Blvd+Montebello+CA+90640" target="_blank" rel="noopener">Directions</a>
     </nav>
 
+    <script>
+      // Light / dark version toggle — dark is the inverted plum version
+      (function () {
+        var root = document.documentElement;
+        var btn = document.getElementById('themeToggle');
+        function sync() {
+          var dark = root.getAttribute('data-theme') !== 'light';
+          root.style.colorScheme = dark ? 'dark' : 'light';
+          if (btn) {
+            btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+            btn.setAttribute('aria-label', dark
+              ? 'Dark version on — switch to the light version'
+              : 'Light version on — switch to the dark version');
+          }
+        }
+        if (btn) {
+          btn.addEventListener('click', function () {
+            root.setAttribute('data-theme', root.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+            sync();
+          });
+        }
+        sync();
+      })();
+    </script>
     <script>
       // Live open/closed line for the studio (Tue–Sat, 10 AM–8 PM, America/Los_Angeles)
       (function () {

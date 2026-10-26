@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="data:," />
+    <title>Book with Des — Luxury Nails by Des</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #1c0e27;
+        --bg-deep: #150a1f;
+        --card: #2b173f;
+        --card-2: #331d4b;
+        --line: rgba(216, 180, 240, 0.16);
+        --line-strong: rgba(216, 180, 240, 0.32);
+        --ink: #f4eaf9;
+        --ink-soft: #d9c3ec;
+        --muted: #b294cc;
+        --pink: #f083b8;
+        --pink-soft: #f7a8cd;
+        --lilac: #c9a3ec;
+        --violet: #9a68d8;
+        --grad: linear-gradient(120deg, #f083b8 0%, #d18fe8 48%, #9a68d8 100%);
+        --grad-soft: linear-gradient(120deg, rgba(240, 131, 184, 0.20), rgba(209, 143, 232, 0.16), rgba(154, 104, 216, 0.20));
+        --radius: 18px;
+        --shadow: 0 18px 44px rgba(6, 2, 12, 0.45);
+      }
+      * { box-sizing: border-box; }
+      [hidden] { display: none !important; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        font-family: "Jost", "Avenir Next", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(1100px 520px at 85% -120px, rgba(154, 104, 216, 0.28), transparent 62%),
+          radial-gradient(900px 480px at -10% 12%, rgba(240, 131, 184, 0.16), transparent 60%),
+          radial-gradient(760px 620px at 50% 115%, rgba(120, 62, 180, 0.22), transparent 65%),
+          linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
+        line-height: 1.5;
+      }
+      .wrap { max-width: 680px; margin: 0 auto; padding: 0 18px 132px; }
+
+      /* ---------- Header ---------- */
+      header { padding: 30px 0 6px; text-align: center; position: relative; }
+      .brand {
+        font-family: "Playfair Display", Georgia, serif;
+        font-weight: 600;
+        font-size: clamp(30px, 7.4vw, 42px);
+        line-height: 1.12;
+        margin: 0;
+        letter-spacing: 0.01em;
+      }
+      .brand em { font-style: italic; color: var(--pink-soft); }
+      .tagline { margin: 8px 0 0; color: var(--ink-soft); font-size: 15.5px; font-weight: 300; letter-spacing: 0.02em; }
+      .tagline .dot { color: var(--pink); margin: 0 7px; }
+      .concept {
+        display: inline-flex; align-items: center; gap: 7px;
+        margin-top: 14px; padding: 5px 13px;
+        border: 1px solid var(--line-strong); border-radius: 999px;
+        font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lilac);
+        background: rgba(43, 23, 63, 0.55);
+      }
+      .concept::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--grad); background-color: var(--pink); }
+
+      /* ---------- Progress ---------- */
+      .progress { display: flex; align-items: flex-start; margin: 26px 2px 4px; }
+      .pstep { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 7px; position: relative; text-align: center; }
+      .pstep::before {
+        content: ""; position: absolute; top: 15px; left: calc(-50% + 17px); right: calc(50% + 17px);
+        height: 2px; background: var(--line); border-radius: 2px;
+      }
+      .pstep:first-child::before { display: none; }
+      .pstep.done::before { background: var(--grad); }
+      .pdot {
+        width: 31px; height: 31px; border-radius: 50%; z-index: 1;
+        display: grid; place-items: center;
+        border: 1.5px solid var(--line-strong); background: var(--card);
+        font-size: 13.5px; font-weight: 500; color: var(--muted);
+        transition: all 0.25s ease;
+      }
+      .pstep.current .pdot { border-color: transparent; background: var(--grad); color: #fff; box-shadow: 0 6px 18px rgba(209, 110, 200, 0.4); }
+      .pstep.done .pdot { border-color: transparent; background: var(--card-2); color: var(--pink-soft); }
+      .plabel { font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); }
+      .pstep.current .plabel { color: var(--ink); }
+      .pstep.done .plabel { color: var(--ink-soft); }
+
+      /* ---------- Summary chip ---------- */
+      .summary {
+        margin-top: 18px; border: 1px solid var(--line); border-radius: var(--radius);
+        background: linear-gradient(160deg, var(--card-2), var(--card));
+        padding: 14px 16px; display: none; box-shadow: var(--shadow);
+      }
+      .summary.show { display: block; animation: rise 0.35s ease both; }
+      .summary .s-name { font-family: "Playfair Display", Georgia, serif; font-size: 18.5px; font-weight: 600; line-height: 1.25; }
+      .summary .s-meta { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 5px; color: var(--ink-soft); font-size: 14px; }
+      .summary .s-meta b { color: var(--pink-soft); font-weight: 600; }
+      .summary .s-when { margin-top: 7px; font-size: 14.5px; color: var(--ink); display: none; }
+      .summary .s-when.show { display: block; }
+      .summary .s-add { margin-top: 4px; font-size: 13.5px; color: var(--muted); display: none; }
+      .summary .s-add.show { display: block; }
+
+      /* ---------- Steps ---------- */
+      .step { display: none; }
+      .step.active { display: block; animation: stepIn 0.38s ease both; }
+      @keyframes stepIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+      @keyframes rise { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+      .step-head { margin: 26px 0 4px; }
+      .step-head h2 { font-family: "Playfair Display", Georgia, serif; font-weight: 600; font-size: clamp(25px, 6vw, 31px); margin: 0; }
+      .step-head p { margin: 6px 0 0; color: var(--ink-soft); font-weight: 300; font-size: 15.5px; }
+
+      /* ---------- Services ---------- */
+      .group { margin-top: 24px; }
+      .group-band {
+        display: flex; align-items: center; gap: 12px;
+        padding: 9px 14px; border-radius: 12px;
+        background: var(--grad-soft);
+        border: 1px solid rgba(216, 160, 235, 0.14);
+      }
+      .group-band h3 {
+        margin: 0; font-family: "Playfair Display", Georgia, serif; font-style: italic;
+        font-weight: 600; font-size: 18px; color: var(--pink-soft); white-space: nowrap;
+      }
+      .group-band::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--line-strong), transparent); }
+      .svc {
+        width: 100%; text-align: left; cursor: pointer; color: inherit; font: inherit;
+        display: flex; align-items: center; gap: 14px;
+        margin-top: 10px; padding: 15px 16px;
+        background: rgba(43, 23, 63, 0.66); border: 1px solid var(--line); border-radius: var(--radius);
+        transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+      }
+      .svc:active { transform: scale(0.99); }
+      .svc .svc-main { flex: 1; min-width: 0; }
+      .svc .svc-name { font-size: 16.5px; font-weight: 500; line-height: 1.3; }
+      .svc .svc-note { font-size: 13.5px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+      .svc .svc-dur { font-size: 13px; color: var(--ink-soft); margin-top: 4px; display: inline-flex; align-items: center; gap: 5px; }
+      .svc .svc-dur svg { opacity: 0.75; }
+      .svc .svc-price {
+        font-family: "Playfair Display", Georgia, serif; font-size: 19px; font-weight: 700; white-space: nowrap;
+        background: var(--grad); -webkit-background-clip: text; background-clip: text; color: var(--pink-soft);
+      }
+      @supports ((-webkit-background-clip: text)) { .svc .svc-price { color: transparent; } }
+      .svc .svc-price small { display: block; font-family: "Jost", sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); -webkit-text-fill-color: var(--muted); text-align: right; }
+      .svc.selected {
+        border-color: rgba(240, 131, 184, 0.75);
+        background: linear-gradient(150deg, rgba(240, 131, 184, 0.14), rgba(154, 104, 216, 0.13)), var(--card-2);
+        box-shadow: 0 10px 30px rgba(190, 90, 180, 0.22);
+      }
+      .svc .check {
+        width: 24px; height: 24px; border-radius: 50%; flex: none;
+        border: 1.5px solid var(--line-strong); display: grid; place-items: center; color: transparent;
+        transition: all 0.2s ease;
+      }
+      .svc.selected .check { background: var(--grad); border-color: transparent; color: #fff; }
+
+      /* ---------- Date & time ---------- */
+      .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 7px; margin-top: 18px; }
+      .day {
+        font: inherit; color: inherit; cursor: pointer;
+        border: 1px solid var(--line); background: rgba(43, 23, 63, 0.66);
+        border-radius: 14px; padding: 9px 2px 8px; text-align: center;
+        display: flex; flex-direction: column; align-items: center; gap: 1px;
+        transition: all 0.18s ease; min-height: 74px; justify-content: center;
+      }
+      .day .dow { font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+      .day .dnum { font-family: "Playfair Display", Georgia, serif; font-size: 19px; font-weight: 700; line-height: 1.15; }
+      .day .dmon { font-size: 10.5px; color: var(--muted); }
+      .day .closed-tag { font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+      .day.selected { background: var(--grad); border-color: transparent; color: #fff; box-shadow: 0 10px 24px rgba(200, 100, 195, 0.35); }
+      .day.selected .dow, .day.selected .dmon { color: rgba(255, 255, 255, 0.85); }
+      .day.closed { opacity: 0.42; cursor: not-allowed; background: rgba(30, 16, 45, 0.5); }
+      .day.closed .dnum { color: var(--muted); }
+      .month-note { margin-top: 10px; font-size: 13px; color: var(--muted); text-align: center; }
+      .slots-head { margin: 26px 0 0; display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+      .slots-head h3 { margin: 0; font-family: "Playfair Display", Georgia, serif; font-size: 20px; font-weight: 600; }
+      .slots-head .ends { font-size: 13.5px; color: var(--muted); }
+      .slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-top: 13px; }
+      @media (min-width: 560px) { .slots { grid-template-columns: repeat(4, 1fr); } }
+      .slot {
+        font: inherit; cursor: pointer; color: var(--ink);
+        border: 1px solid var(--line); background: rgba(43, 23, 63, 0.66);
+        border-radius: 13px; padding: 12px 4px; font-size: 15.5px; font-weight: 500; text-align: center;
+        transition: all 0.18s ease; min-height: 50px;
+      }
+      .slot.selected { background: var(--grad); border-color: transparent; color: #fff; box-shadow: 0 8px 20px rgba(200, 100, 195, 0.35); }
+      .slot.booked {
+        cursor: not-allowed; color: var(--muted); background: rgba(26, 13, 38, 0.55);
+        text-decoration: line-through; text-decoration-color: rgba(240, 131, 184, 0.55);
+        font-size: 13.5px; font-weight: 400;
+      }
+      .slot.booked .bk { display: block; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; margin-top: 1px; }
+      .no-slots { margin-top: 14px; padding: 16px; border: 1px dashed var(--line-strong); border-radius: var(--radius); color: var(--ink-soft); font-size: 15px; text-align: center; }
+
+      /* ---------- Details form ---------- */
+      .field { margin-top: 18px; }
+      .field label { display: block; font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 7px; }
+      .field label .opt { text-transform: none; letter-spacing: 0; color: var(--muted); font-size: 12.5px; }
+      .field input, .field textarea {
+        width: 100%; font: inherit; font-size: 16.5px; color: var(--ink);
+        background: rgba(43, 23, 63, 0.7); border: 1px solid var(--line); border-radius: 14px;
+        padding: 14px 15px; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .field textarea { min-height: 92px; resize: vertical; }
+      .field input::placeholder, .field textarea::placeholder { color: #8d6fae; font-weight: 300; }
+      .field input:focus, .field textarea:focus { border-color: rgba(240, 131, 184, 0.7); box-shadow: 0 0 0 3px rgba(240, 131, 184, 0.16); }
+      .field.error input { border-color: #e5637f; box-shadow: 0 0 0 3px rgba(229, 99, 127, 0.14); }
+      .field .err { display: none; margin-top: 6px; font-size: 13.5px; color: #f49eb2; }
+      .field.error .err { display: block; }
+      .name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      @media (max-width: 430px) { .name-row { grid-template-columns: 1fr; } .name-row .field { margin-top: 18px; } }
+
+      .toggle-card {
+        margin-top: 16px; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius);
+        background: rgba(43, 23, 63, 0.66);
+      }
+      .toggle-row { display: flex; align-items: center; gap: 14px; }
+      .toggle-row .t-text { flex: 1; }
+      .toggle-row .t-title { font-size: 16px; font-weight: 500; }
+      .toggle-row .t-sub { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+      .switch { position: relative; flex: none; width: 52px; height: 30px; }
+      .switch input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+      .switch .track {
+        position: absolute; inset: 0; border-radius: 999px; pointer-events: none;
+        background: rgba(216, 180, 240, 0.18); border: 1px solid var(--line-strong); transition: all 0.22s ease;
+      }
+      .switch .track::after {
+        content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%;
+        background: #e9d8f5; transition: all 0.22s ease;
+      }
+      .switch input:checked + .track { background: var(--grad); border-color: transparent; }
+      .switch input:checked + .track::after { left: 25px; background: #fff; }
+      .switch input:focus-visible + .track { box-shadow: 0 0 0 3px rgba(240, 131, 184, 0.35); }
+      .policy-note {
+        display: none; margin-top: 12px; padding: 12px 13px; border-radius: 12px;
+        background: var(--grad-soft); border: 1px solid rgba(216, 160, 235, 0.16);
+        font-size: 14px; color: var(--ink-soft); line-height: 1.5;
+      }
+      .policy-note.show { display: block; animation: rise 0.3s ease both; }
+      .policy-note b { color: var(--pink-soft); font-weight: 600; }
+
+      /* ---------- Confirmation ---------- */
+      .confirm { text-align: center; padding-top: 30px; }
+      .checkwrap { width: 92px; height: 92px; margin: 0 auto; position: relative; }
+      .checkwrap .ring {
+        position: absolute; inset: 0; border-radius: 50%;
+        background: var(--grad); opacity: 0.18; animation: pulse 2.2s ease-in-out infinite;
+      }
+      @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.18; } 50% { transform: scale(1.14); opacity: 0.08; } }
+      .checkwrap svg { position: relative; }
+      .checkwrap .circle { stroke-dasharray: 290; stroke-dashoffset: 290; animation: draw 0.7s ease forwards; }
+      .checkwrap .tick { stroke-dasharray: 60; stroke-dashoffset: 60; animation: draw 0.45s ease 0.55s forwards; }
+      @keyframes draw { to { stroke-dashoffset: 0; } }
+      .confirm h2 { font-family: "Playfair Display", Georgia, serif; font-size: clamp(28px, 7vw, 36px); font-weight: 600; margin: 20px 0 0; }
+      .confirm .ref { margin-top: 8px; font-size: 14px; color: var(--muted); letter-spacing: 0.06em; }
+      .confirm .ref b { color: var(--lilac); font-weight: 600; letter-spacing: 0.12em; }
+      .confirm-card {
+        margin-top: 24px; text-align: left; border: 1px solid var(--line); border-radius: 22px;
+        background: linear-gradient(165deg, var(--card-2), var(--card)); box-shadow: var(--shadow); overflow: hidden;
+      }
+      .confirm-card .cc-top { padding: 18px 20px 6px; background: var(--grad-soft); border-bottom: 1px solid var(--line); }
+      .confirm-card .cc-service { font-family: "Playfair Display", Georgia, serif; font-size: 21px; font-weight: 600; line-height: 1.3; }
+      .confirm-card .cc-add { font-size: 14px; color: var(--ink-soft); margin-top: 3px; }
+      .confirm-rows { padding: 10px 20px 18px; }
+      .crow { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15.5px; }
+      .crow:last-child { border-bottom: none; }
+      .crow .k { color: var(--muted); flex: none; }
+      .crow .v { text-align: right; font-weight: 500; }
+      .crow .v.grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: var(--pink-soft); font-family: "Playfair Display", Georgia, serif; font-size: 19px; font-weight: 700; }
+      @supports ((-webkit-background-clip: text)) { .crow .v.grad { color: transparent; } }
+      .text-note { margin-top: 16px; font-size: 14.5px; color: var(--ink-soft); }
+      .disclaimer { margin-top: 8px; font-size: 13px; color: var(--muted); }
+      .confirm-actions { display: flex; flex-direction: column; gap: 11px; margin-top: 24px; }
+      @media (min-width: 520px) { .confirm-actions { flex-direction: row; } .confirm-actions > * { flex: 1; } }
+
+      /* ---------- Action bar ---------- */
+      .actionbar {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+        background: rgba(24, 12, 36, 0.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+        border-top: 1px solid var(--line);
+        padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+      }
+      .actionbar.hide { display: none; }
+      .ab-inner { max-width: 680px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+      .ab-total { flex: 1; min-width: 0; }
+      .ab-total .t-label { font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+      .ab-total .t-val { font-family: "Playfair Display", Georgia, serif; font-size: 21px; font-weight: 700; line-height: 1.15; white-space: nowrap; }
+      .ab-total .t-sub { font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .btn {
+        font: inherit; cursor: pointer; border-radius: 999px; border: 1px solid transparent;
+        padding: 14px 26px; font-size: 16px; font-weight: 600; letter-spacing: 0.02em;
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        transition: all 0.2s ease; text-decoration: none; text-align: center;
+      }
+      .btn-primary { background: var(--grad); color: #fff; box-shadow: 0 10px 26px rgba(200, 100, 195, 0.35); }
+      .btn-primary:disabled { opacity: 0.38; box-shadow: none; cursor: not-allowed; }
+      .btn-ghost { background: transparent; border-color: var(--line-strong); color: var(--ink-soft); }
+      .btn-ghost:hover { border-color: var(--pink); color: var(--ink); }
+      .btn-back { padding: 14px 18px; flex: none; }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1 class="brand">Luxury Nails <em>by Des</em></h1>
+        <p class="tagline">Book an appointment <span class="dot">✦</span> Inside 213 Beauty Studio, Montebello</p>
+        <span class="concept">Concept preview</span>
+      </header>
+
+      <nav class="progress" id="progress" aria-label="Booking progress"></nav>
+
+      <div class="summary" id="summary" aria-live="polite">
+        <div class="s-name" id="sumName"></div>
+        <div class="s-meta" id="sumMeta"></div>
+        <div class="s-when" id="sumWhen"></div>
+        <div class="s-add" id="sumAdd"></div>
+      </div>
+
+      <main>
+        <!-- STEP 1 : SERVICE -->
+        <section class="step active" id="step-1">
+          <div class="step-head">
+            <h2>Choose your service</h2>
+            <p>Tap a service to select it. Prices are “starting at” — final quotes depend on length, design, and detail.</p>
+          </div>
+          <div id="serviceList"></div>
+        </section>
+
+        <!-- STEP 2 : DATE & TIME -->
+        <section class="step" id="step-2">
+          <div class="step-head">
+            <h2>Pick a date &amp; time</h2>
+            <p>Des takes appointments five days a week — Tuesdays and Wednesdays are her days off.</p>
+          </div>
+          <div class="days" id="days"></div>
+          <p class="month-note" id="monthNote"></p>
+          <div class="slots-head">
+            <h3 id="slotsTitle">Available times</h3>
+            <span class="ends" id="slotsEnds"></span>
+          </div>
+          <div class="slots" id="slots"></div>
+          <div class="no-slots" id="noSlots" hidden>No times left this day for that service length — try the next open day.</div>
+        </section>
+
+        <!-- STEP 3 : DETAILS -->
+        <section class="step" id="step-3">
+          <div class="step-head">
+            <h2>Your details</h2>
+            <p>Almost done — Des just needs to know who’s coming and how to reach you.</p>
+          </div>
+          <form id="detailsForm" novalidate>
+            <div class="name-row">
+              <div class="field" id="f-first">
+                <label for="inFirst">First name</label>
+                <input id="inFirst" type="text" autocomplete="given-name" placeholder="e.g. Maria" />
+                <div class="err">Please add your first name.</div>
+              </div>
+              <div class="field" id="f-last">
+                <label for="inLast">Last name</label>
+                <input id="inLast" type="text" autocomplete="family-name" placeholder="e.g. Lopez" />
+                <div class="err">Please add your last name.</div>
+              </div>
+            </div>
+            <div class="field" id="f-phone">
+              <label for="inPhone">Mobile phone</label>
+              <input id="inPhone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(323) 555-0123" />
+              <div class="err">Please add a valid mobile number so Des can text your confirmation.</div>
+            </div>
+
+            <div class="toggle-card">
+              <div class="toggle-row">
+                <div class="t-text">
+                  <div class="t-title">I have product on my nails</div>
+                  <div class="t-sub">Old set, gel, or acrylic that needs to come off first</div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="tglRemoval" />
+                  <span class="track"></span>
+                </label>
+              </div>
+              <div class="policy-note" id="removalNote">
+                <b>Product Removal added — +$20, +20 min.</b> Per Des’s policy, removal must be booked
+                ahead: without it, your appointment may be modified or rescheduled, as there may not
+                be enough time to safely remove existing product and complete your service.
+              </div>
+            </div>
+
+            <div class="toggle-card">
+              <div class="toggle-row">
+                <div class="t-text">
+                  <div class="t-title">This is a fill of Des’s work</div>
+                  <div class="t-sub">Fills are for Des’s own sets, 31 days old or less</div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="tglFill" />
+                  <span class="track"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="inNotes">Notes for Des <span class="opt">— optional</span></label>
+              <textarea id="inNotes" placeholder="Inspo photos you’re bringing, design ideas, colors you love…"></textarea>
+            </div>
+          </form>
+        </section>
+
+        <!-- STEP 4 : CONFIRMATION -->
+        <section class="step" id="step-4">
+          <div class="confirm">
+            <div class="checkwrap" aria-hidden="true">
+              <div class="ring"></div>
+              <svg width="92" height="92" viewBox="0 0 92 92" fill="none">
+                <defs>
+                  <linearGradient id="cg" x1="0" y1="0" x2="92" y2="92">
+                    <stop offset="0" stop-color="#f083b8" /><stop offset="0.5" stop-color="#d18fe8" /><stop offset="1" stop-color="#9a68d8" />
+                  </linearGradient>
+                </defs>
+                <circle class="circle" cx="46" cy="46" r="43" stroke="url(#cg)" stroke-width="3.5" />
+                <path class="tick" d="M29 47.5 L41.5 60 L64 35" stroke="url(#cg)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <h2 id="confirmTitle">You’re booked!</h2>
+            <p class="ref">Booking reference <b id="confirmRef">DES-0000</b></p>
+            <div class="confirm-card">
+              <div class="cc-top">
+                <div class="cc-service" id="ccService"></div>
+                <div class="cc-add" id="ccAdd"></div>
+              </div>
+              <div class="confirm-rows" id="confirmRows"></div>
+            </div>
+            <p class="text-note" id="textNote"></p>
+            <p class="disclaimer">This is a design preview of booking on Des’s own site — no real appointment has been made.</p>
+            <div class="confirm-actions">
+              <button class="btn btn-ghost" id="btnAgain" type="button">Book another</button>
+              <a class="btn btn-primary" href="../">Back to Des’s page</a>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="actionbar" id="actionbar">
+      <div class="ab-inner">
+        <button class="btn btn-ghost btn-back" id="btnBack" type="button" hidden>← Back</button>
+        <div class="ab-total">
+          <div class="t-label" id="abLabel">Total</div>
+          <div class="t-val" id="abTotal">—</div>
+          <div class="t-sub" id="abSub">Pick a service to begin</div>
+        </div>
+        <button class="btn btn-primary" id="btnNext" type="button" disabled>Continue</button>
+      </div>
+    </footer>
+
+    <script>
+      "use strict";
+
+      /* ================= Data — Des's real menu, prices & durations ================= */
+      var GROUPS = [
+        { name: "Acrylic & Gel-X Sets", services: [
+          { id: "french",  name: "Acrylic Full Set — Classic French Tip", price: 110, plus: true,  mins: 90,  durLabel: "90+ min" },
+          { id: "gelx",    name: "Gel-X Full Set",                        price: 90,  plus: true,  mins: 60,  durLabel: "60+ min" },
+          { id: "solid",   name: "Acrylic Full Set — Solid Color",         price: 80,  plus: true,  mins: 90,  durLabel: "90+ min" },
+          { id: "custom",  name: "Custom Acrylic Set",                     price: 80,  plus: true,  mins: 150, durLabel: "150+ min", note: "Quoted from your inspo photos" },
+          { id: "fill",    name: "Acrylic Fill",                           price: 65,  plus: true,  mins: 75,  durLabel: "75+ min",  note: "For Des’s sets 31 days old or less" }
+        ]},
+        { name: "Manicures & Overlays", services: [
+          { id: "overlay", name: "Acrylic Overlay — Natural Nails",        price: 70,  plus: true,  mins: 75,  durLabel: "75+ min" },
+          { id: "hardgel", name: "Hard Gel Overlay + Russian Manicure",    price: 85,  plus: true,  mins: 90,  durLabel: "90+ min" },
+          { id: "rusgel",  name: "Russian Gel Manicure",                   price: 70,  plus: true,  mins: 45,  durLabel: "45 min" },
+          { id: "gelmani", name: "Gel Manicure",                           price: 55,  plus: true,  mins: 45,  durLabel: "45 min" }
+        ]},
+        { name: "Pedicures", services: [
+          { id: "drypedi", name: "Dry Pedicure",                           price: 45,  plus: true,  mins: 40,  durLabel: "40 min" },
+          { id: "basicpedi", name: "Basic Spa Pedicure",                   price: 55,  plus: true,  mins: 50,  durLabel: "50 min" },
+          { id: "luxpedi", name: "Luxury Spa Pedicure",                    price: 75,  plus: true,  mins: 70,  durLabel: "70 min" }
+        ]},
+        { name: "Extras", services: [
+          { id: "removal", name: "Product Removal",                        price: 20,  plus: false, mins: 20,  durLabel: "20 min" },
+          { id: "nailart", name: "Nail Art Add-On",                        price: 10,  plus: true,  mins: 30,  durLabel: "Varies", note: "Priced by design — final quote at your appointment" },
+          { id: "hair",    name: "Keratin Hair Treatment / Hair Extensions", price: 250, plus: true, mins: 60, durLabel: "Consultation", note: "Starts with a consultation with Des" }
+        ]}
+      ];
+      var ALL = {};
+      GROUPS.forEach(function (g) { g.services.forEach(function (s) { ALL[s.id] = s; }); });
+
+      /* Des's real appointment hours by weekday (0 = Sunday). Tue/Wed closed. */
+      var HOURS = { 0: [11 * 60, 19 * 60], 1: [10 * 60, 19 * 60], 2: null, 3: null, 4: [10 * 60, 19 * 60], 5: [9 * 60, 19 * 60], 6: [9 * 60, 19 * 60] };
+      var REMOVAL = { price: 20, mins: 20 };
+      var LOCATION = "Inside 213 Beauty Studio, 412 W Whittier Blvd, Montebello";
+
+      /* ================= State ================= */
+      var state = {
+        step: 1,
+        serviceId: null,
+        dateISO: null,
+        slotMin: null,
+        removal: false,
+        fill: false,
+        ref: null
+      };
+
+      /* ================= Helpers ================= */
+      function $(id) { return document.getElementById(id); }
+      function pad(n) { return (n < 10 ? "0" : "") + n; }
+      function toISO(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+      function fromISO(iso) { var p = iso.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+      function fmtTime(mins) {
+        var h = Math.floor(mins / 60), m = mins % 60, ap = h >= 12 ? "PM" : "AM";
+        var h12 = h % 12; if (h12 === 0) h12 = 12;
+        return h12 + ":" + pad(m) + " " + ap;
+      }
+      function fmtDur(total) {
+        var h = Math.floor(total / 60), m = total % 60;
+        if (h && m) return h + " hr " + m + " min";
+        if (h) return h + " hr";
+        return m + " min";
+      }
+      function fullDate(iso) {
+        return fromISO(iso).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+      }
+      function shortDate(iso) {
+        return fromISO(iso).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+      }
+      /* Deterministic pseudo-random booked slots (~25%), stable per date+time. */
+      function hashStr(s) {
+        var h = 2166136261;
+        for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+        return h >>> 0;
+      }
+      function isBooked(iso, slotMin) { return hashStr(iso + "@" + slotMin) % 100 < 25; }
+
+      function service() { return state.serviceId ? ALL[state.serviceId] : null; }
+      function totalMins() {
+        var s = service(); if (!s) return 0;
+        return s.mins + (state.removal ? REMOVAL.mins : 0);
+      }
+      function totalPrice() {
+        var s = service(); if (!s) return null;
+        var p = s.price + (state.removal ? REMOVAL.price : 0);
+        return { amount: p, plus: !!s.plus };
+      }
+      function endMin() { return state.slotMin == null ? null : state.slotMin + totalMins(); }
+
+      /* ================= Progress ================= */
+      var STEP_LABELS = ["Service", "Date & Time", "Your Details", "Done"];
+      function renderProgress() {
+        var nav = $("progress");
+        nav.innerHTML = "";
+        STEP_LABELS.forEach(function (label, i) {
+          var n = i + 1;
+          var d = document.createElement("div");
+          d.className = "pstep" + (n < state.step ? " done" : n === state.step ? " current" : "");
+          var dot = document.createElement("div");
+          dot.className = "pdot";
+          dot.innerHTML = n < state.step
+            ? '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5 L5.8 10.5 L11.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+            : String(n);
+          var lab = document.createElement("div");
+          lab.className = "plabel";
+          lab.textContent = label;
+          d.appendChild(dot); d.appendChild(lab);
+          nav.appendChild(d);
+        });
+      }
+
+      /* ================= Step 1 : services ================= */
+      var clockSVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+      function renderServices() {
+        var host = $("serviceList");
+        host.innerHTML = "";
+        GROUPS.forEach(function (g) {
+          var wrap = document.createElement("div");
+          wrap.className = "group";
+          var band = document.createElement("div");
+          band.className = "group-band";
+          var h = document.createElement("h3");
+          h.textContent = g.name;
+          band.appendChild(h);
+          wrap.appendChild(band);
+          g.services.forEach(function (s) {
+            var b = document.createElement("button");
+            b.type = "button";
+            b.className = "svc" + (state.serviceId === s.id ? " selected" : "");
+            b.setAttribute("aria-pressed", state.serviceId === s.id ? "true" : "false");
+            var main = document.createElement("div");
+            main.className = "svc-main";
+            var nm = document.createElement("div");
+            nm.className = "svc-name"; nm.textContent = s.name;
+            main.appendChild(nm);
+            if (s.note) {
+              var nt = document.createElement("div");
+              nt.className = "svc-note"; nt.textContent = s.note;
+              main.appendChild(nt);
+            }
+            var dur = document.createElement("div");
+            dur.className = "svc-dur";
+            dur.innerHTML = clockSVG + "<span>" + s.durLabel + "</span>";
+            main.appendChild(dur);
+            var price = document.createElement("div");
+            price.className = "svc-price";
+            price.innerHTML = (s.plus ? "<small>From</small>" : "") + "$" + s.price + (s.plus ? "+" : "");
+            var chk = document.createElement("div");
+            chk.className = "check";
+            chk.innerHTML = '<svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5 L5.8 10.5 L11.5 3.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+            b.appendChild(main); b.appendChild(price); b.appendChild(chk);
+            b.addEventListener("click", function () {
+              if (state.serviceId !== s.id) {
+                state.serviceId = s.id;
+                state.slotMin = null; /* duration changed — recheck the slot */
+              }
+              renderServices();
+              updateSummary();
+            });
+            wrap.appendChild(b);
+          });
+          host.appendChild(wrap);
+        });
+      }
+
+      /* ================= Step 2 : days & slots ================= */
+      var DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      function next14() {
+        var out = [], now = new Date();
+        for (var i = 0; i < 14; i++) {
+          var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
+          out.push(d);
+        }
+        return out;
+      }
+      function slotsFor(iso) {
+        var s = service(); if (!s) return [];
+        var d = fromISO(iso), hrs = HOURS[d.getDay()];
+        if (!hrs) return [];
+        var open = hrs[0], close = hrs[1];
+        var last = Math.floor((close - s.mins) / 30) * 30;
+        var now = new Date(), isToday = iso === toISO(now);
+        var nowMin = now.getHours() * 60 + now.getMinutes();
+        var out = [];
+        for (var t = open; t <= last; t += 30) {
+          var gone = isToday && t <= nowMin + 30; /* too soon / already past today */
+          out.push({ t: t, booked: gone || isBooked(iso, t) });
+        }
+        return out;
+      }
+      function renderDays() {
+        var host = $("days");
+        host.innerHTML = "";
+        var days = next14();
+        /* Default: first open day that still has a bookable slot. */
+        if (!state.dateISO) {
+          for (var i = 0; i < days.length; i++) {
+            var iso = toISO(days[i]);
+            if (!HOURS[days[i].getDay()]) continue;
+            if (slotsFor(iso).some(function (x) { return !x.booked; })) { state.dateISO = iso; break; }
+          }
+          if (!state.dateISO) state.dateISO = toISO(days[0]);
+        }
+        days.forEach(function (d) {
+          var iso = toISO(d), closed = !HOURS[d.getDay()];
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "day" + (closed ? " closed" : "") + (state.dateISO === iso ? " selected" : "");
+          b.disabled = closed;
+          b.setAttribute("aria-label", fullDate(iso) + (closed ? " — closed" : ""));
+          var dow = document.createElement("span"); dow.className = "dow"; dow.textContent = DOW[d.getDay()];
+          var num = document.createElement("span"); num.className = "dnum"; num.textContent = d.getDate();
+          var mon = document.createElement("span"); mon.className = "dmon"; mon.textContent = closed ? "" : MON[d.getMonth()];
+          b.appendChild(dow); b.appendChild(num);
+          if (closed) {
+            var tag = document.createElement("span"); tag.className = "closed-tag"; tag.textContent = "Closed";
+            b.appendChild(tag);
+          } else { b.appendChild(mon); }
+          if (!closed) b.addEventListener("click", function () {
+            state.dateISO = iso; state.slotMin = null;
+            renderDays(); renderSlots(); updateSummary();
+          });
+          host.appendChild(b);
+        });
+        var first = days[0], lastD = days[13];
+        $("monthNote").textContent = MON[first.getMonth()] + " " + first.getDate() + " – " +
+          (lastD.getMonth() !== first.getMonth() ? MON[lastD.getMonth()] + " " : "") + lastD.getDate() +
+          " · Des is closed Tuesdays & Wednesdays";
+      }
+      function renderSlots() {
+        var host = $("slots");
+        host.innerHTML = "";
+        if (!state.dateISO || !service()) return;
+        $("slotsTitle").textContent = shortDate(state.dateISO);
+        var slots = slotsFor(state.dateISO);
+        var anyFree = slots.some(function (x) { return !x.booked; });
+        $("noSlots").hidden = anyFree || slots.length === 0;
+        if (state.slotMin != null) {
+          var still = slots.some(function (x) { return x.t === state.slotMin && !x.booked; });
+          if (!still) state.slotMin = null;
+        }
+        slots.forEach(function (x) {
+          var b = document.createElement("button");
+          b.type = "button";
+          if (x.booked) {
+            b.className = "slot booked";
+            b.disabled = true;
+            b.innerHTML = fmtTime(x.t) + '<span class="bk">Booked</span>';
+          } else {
+            b.className = "slot" + (state.slotMin === x.t ? " selected" : "");
+            b.textContent = fmtTime(x.t);
+            b.addEventListener("click", function () {
+              state.slotMin = x.t;
+              renderSlots(); updateSummary();
+            });
+          }
+          host.appendChild(b);
+        });
+        updateEnds();
+      }
+      function updateEnds() {
+        var el = $("slotsEnds");
+        if (state.slotMin != null) {
+          el.textContent = "Ends " + fmtTime(endMin()) + " · " + fmtDur(totalMins());
+        } else { el.textContent = ""; }
+      }
+
+      /* ================= Summary chip + action bar ================= */
+      function updateSummary() {
+        var s = service();
+        var chip = $("summary");
+        if (!s) {
+          chip.classList.remove("show");
+          $("abTotal").textContent = "—";
+          $("abSub").textContent = "Pick a service";
+        } else {
+          if (state.step === 4) chip.classList.remove("show"); else chip.classList.add("show");
+          $("sumName").textContent = s.name;
+          var tp = totalPrice();
+          $("sumMeta").innerHTML =
+            "<span>From <b>$" + tp.amount + (tp.plus ? "+" : "") + "</b></span>" +
+            "<span><b>" + fmtDur(totalMins()) + "</b>" + (s.plus ? "+" : "") + "</span>" +
+            "<span>with Des</span>";
+          var when = $("sumWhen");
+          if (state.dateISO && state.slotMin != null) {
+            when.textContent = shortDate(state.dateISO) + " · " + fmtTime(state.slotMin) + " – " + fmtTime(endMin());
+            when.classList.add("show");
+          } else if (state.dateISO) {
+            when.textContent = shortDate(state.dateISO) + " · pick a time";
+            when.classList.add("show");
+          } else { when.classList.remove("show"); }
+          var add = $("sumAdd");
+          var bits = [];
+          if (state.removal) bits.push("+ Product Removal ($20 · 20 min)");
+          if (state.fill) bits.push("Fill of Des’s work (≤31 days)");
+          if (bits.length) { add.textContent = bits.join("  ·  "); add.classList.add("show"); }
+          else add.classList.remove("show");
+          $("abTotal").textContent = "From $" + tp.amount + (tp.plus ? "+" : "");
+          $("abSub").textContent = state.dateISO && state.slotMin != null
+            ? shortDate(state.dateISO) + " · " + fmtTime(state.slotMin)
+            : s.name;
+        }
+        /* Action bar state */
+        var next = $("btnNext"), back = $("btnBack");
+        back.hidden = state.step === 1;
+        next.textContent = state.step === 3 ? "Confirm booking" : "Continue";
+        if (state.step === 1) next.disabled = !s;
+        else if (state.step === 2) next.disabled = !(state.dateISO && state.slotMin != null);
+        else next.disabled = false;
+        updateEnds();
+      }
+
+      /* ================= Navigation ================= */
+      function goTo(n) {
+        state.step = n;
+        for (var i = 1; i <= 4; i++) $("step-" + i).classList.toggle("active", i === n);
+        $("actionbar").classList.toggle("hide", n === 4);
+        renderProgress();
+        if (n === 2) { renderDays(); renderSlots(); }
+        updateSummary();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      $("btnBack").addEventListener("click", function () { if (state.step > 1) goTo(state.step - 1); });
+      $("btnNext").addEventListener("click", function () {
+        if (state.step === 1 && state.serviceId) goTo(2);
+        else if (state.step === 2 && state.slotMin != null) goTo(3);
+        else if (state.step === 3) confirmBooking();
+      });
+
+      /* ================= Step 3 : details ================= */
+      $("tglRemoval").addEventListener("change", function (e) {
+        state.removal = e.target.checked;
+        $("removalNote").classList.toggle("show", state.removal);
+        /* Removal as the main service doesn't need the add-on. */
+        updateSummary();
+      });
+      $("tglFill").addEventListener("change", function (e) {
+        state.fill = e.target.checked;
+        updateSummary();
+      });
+      ["inFirst", "inLast", "inPhone"].forEach(function (id) {
+        $(id).addEventListener("input", function () {
+          $(id).closest(".field").classList.remove("error");
+        });
+      });
+      function phoneDigits(v) { return v.replace(/\D/g, ""); }
+      function validPhone(v) {
+        var d = phoneDigits(v);
+        if (d.length === 11 && d.charAt(0) === "1") d = d.slice(1);
+        return d.length === 10;
+      }
+      function fmtPhone(v) {
+        var d = phoneDigits(v);
+        if (d.length === 11 && d.charAt(0) === "1") d = d.slice(1);
+        if (d.length === 10) return "(" + d.slice(0, 3) + ") " + d.slice(3, 6) + "-" + d.slice(6);
+        return v.trim();
+      }
+      function validateDetails() {
+        var ok = true;
+        var first = $("inFirst").value.trim(), last = $("inLast").value.trim(), phone = $("inPhone").value;
+        $("f-first").classList.toggle("error", !first); if (!first) ok = false;
+        $("f-last").classList.toggle("error", !last); if (!last) ok = false;
+        var phOk = validPhone(phone);
+        $("f-phone").classList.toggle("error", !phOk); if (!phOk) ok = false;
+        if (!ok) {
+          var bad = document.querySelector(".field.error");
+          if (bad) bad.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        return ok;
+      }
+
+      /* ================= Step 4 : confirmation ================= */
+      function makeRef() {
+        var chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+        var seed = hashStr(state.serviceId + state.dateISO + state.slotMin + $("inPhone").value + Date.now());
+        var out = "";
+        for (var i = 0; i < 4; i++) { seed = (Math.imul(seed, 1103515245) + 12345) >>> 0; out += chars.charAt(seed % chars.length); }
+        return "DES-" + out;
+      }
+      function confirmBooking() {
+        if (!validateDetails()) return;
+        var s = service();
+        var first = $("inFirst").value.trim(), last = $("inLast").value.trim();
+        var phone = fmtPhone($("inPhone").value);
+        var notes = $("inNotes").value.trim();
+        state.ref = makeRef();
+        $("confirmTitle").textContent = "You’re booked, " + first + "!";
+        $("confirmRef").textContent = state.ref;
+        $("ccService").textContent = s.name;
+        var addBits = [];
+        if (state.removal) addBits.push("with Product Removal");
+        if (state.fill) addBits.push("fill of Des’s work (≤31 days)");
+        $("ccAdd").textContent = addBits.length ? "Booked " + addBits.join(" · ") : "with Des · Luxury Nails by Des";
+        var tp = totalPrice();
+        var rows = [
+          ["Date", fullDate(state.dateISO)],
+          ["Time", fmtTime(state.slotMin) + " – " + fmtTime(endMin())],
+          ["Duration", fmtDur(totalMins()) + (s.plus ? "+" : "")],
+          ["Total", "From $" + tp.amount + (tp.plus ? "+" : ""), true],
+          ["Location", LOCATION]
+        ];
+        if (notes) rows.push(["Notes for Des", notes]);
+        rows.push(["Booked for", first + " " + last]);
+        var host = $("confirmRows");
+        host.innerHTML = "";
+        rows.forEach(function (r) {
+          var row = document.createElement("div"); row.className = "crow";
+          var k = document.createElement("span"); k.className = "k"; k.textContent = r[0];
+          var v = document.createElement("span"); v.className = "v" + (r[2] ? " grad" : ""); v.textContent = r[1];
+          row.appendChild(k); row.appendChild(v);
+          host.appendChild(row);
+        });
+        $("textNote").textContent = "A text confirmation would be sent to " + phone + ".";
+        goTo(4);
+      }
+      $("btnAgain").addEventListener("click", function () {
+        state.serviceId = null; state.dateISO = null; state.slotMin = null;
+        state.removal = false; state.fill = false; state.ref = null;
+        $("tglRemoval").checked = false; $("tglFill").checked = false;
+        $("removalNote").classList.remove("show");
+        $("inFirst").value = ""; $("inLast").value = ""; $("inPhone").value = ""; $("inNotes").value = "";
+        ["f-first", "f-last", "f-phone"].forEach(function (id) { $(id).classList.remove("error"); });
+        renderServices();
+        goTo(1);
+      });
+
+      /* If Product Removal itself is the service, the add-on toggle is moot — reflect that. */
+      var origUpdate = updateSummary;
+      updateSummary = function () {
+        if (state.serviceId === "removal" && state.removal) {
+          state.removal = false;
+          $("tglRemoval").checked = false;
+          $("removalNote").classList.remove("show");
+        }
+        origUpdate();
+      };
+
+      /* ================= Init ================= */
+      renderServices();
+      renderProgress();
+      updateSummary();
+    </script>
+  </body>
+</html>

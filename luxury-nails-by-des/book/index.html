@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="dark" />
+    <meta name="description" content="Book an appointment with Des at Luxury Nails by Des — inside 213 Beauty Studio, Montebello. Pick your service, add extras, choose a time. Concept preview." />
+    <meta name="robots" content="noindex" />
     <link rel="icon" href="data:," />
     <title>Book with Des — Luxury Nails by Des</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -112,7 +114,7 @@
       }
       .pstep.current .pdot { border-color: transparent; background: var(--grad); color: #fff; box-shadow: 0 6px 18px rgba(209, 110, 200, 0.4); }
       .pstep.done .pdot { border-color: transparent; background: var(--card-2); color: var(--pink-soft); }
-      .plabel { font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); }
+      .plabel { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
       .pstep.current .plabel { color: var(--ink); }
       .pstep.done .plabel { color: var(--ink-soft); }
 
@@ -273,7 +275,7 @@
         padding: 14px 15px; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;
       }
       .field textarea { min-height: 92px; resize: vertical; }
-      .field input::placeholder, .field textarea::placeholder { color: #8d6fae; font-weight: 300; }
+      .field input::placeholder, .field textarea::placeholder { color: #c9abe6; font-weight: 400; }
       .field input:focus, .field textarea:focus { border-color: rgba(240, 131, 184, 0.7); box-shadow: 0 0 0 3px rgba(240, 131, 184, 0.16); }
       .field.error input { border-color: #e5637f; box-shadow: 0 0 0 3px rgba(229, 99, 127, 0.14); }
       .field .err { display: none; margin-top: 6px; font-size: 13.5px; color: #f49eb2; }
@@ -301,7 +303,7 @@
       }
       .switch input:checked + .track { background: var(--grad); border-color: transparent; }
       .switch input:checked + .track::after { left: 25px; background: #fff; }
-      .switch input:focus-visible + .track { box-shadow: 0 0 0 3px rgba(240, 131, 184, 0.35); }
+      .switch input:focus-visible + .track { outline: 2px solid var(--pink); outline-offset: 2px; }
       .policy-note {
         display: none; margin-top: 12px; padding: 12px 13px; border-radius: 12px;
         background: var(--grad-soft); border: 1px solid rgba(216, 160, 235, 0.16);
@@ -309,6 +311,64 @@
       }
       .policy-note.show { display: block; animation: rise 0.3s ease both; }
       .policy-note b { color: var(--pink-soft); font-weight: 600; }
+
+      /* ---------- Extras (step 2) ---------- */
+      .extras { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+      .xchip {
+        width: 100%; text-align: left; cursor: pointer; color: inherit; font: inherit;
+        display: flex; align-items: center; gap: 14px;
+        padding: 15px 16px;
+        background: rgba(43, 23, 63, 0.66); border: 1px solid var(--line); border-radius: var(--radius);
+        transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+      }
+      .xchip:active { transform: scale(0.985); }
+      .xchip .x-main { flex: 1; min-width: 0; }
+      .xchip .x-name { font-size: 16.5px; font-weight: 500; line-height: 1.3; }
+      .xchip .x-sub { font-size: 13.5px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+      .xchip .x-meta {
+        font-family: "Playfair Display", Georgia, serif; font-size: 17px; font-weight: 700; white-space: nowrap;
+        background: var(--grad); -webkit-background-clip: text; background-clip: text; color: var(--pink-soft); text-align: right;
+      }
+      @supports ((-webkit-background-clip: text)) { .xchip .x-meta { color: transparent; } }
+      .xchip .x-meta small { display: block; font-family: "Jost", sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.04em; color: var(--muted); -webkit-text-fill-color: var(--muted); text-align: right; }
+      .xchip .check {
+        width: 24px; height: 24px; border-radius: 50%; flex: none;
+        border: 1.5px solid var(--line-strong); display: grid; place-items: center; color: transparent;
+        transition: all 0.2s ease;
+      }
+      .xchip.selected {
+        border-color: rgba(240, 131, 184, 0.75);
+        background: linear-gradient(150deg, rgba(240, 131, 184, 0.14), rgba(154, 104, 216, 0.13)), var(--card-2);
+        box-shadow: 0 10px 30px rgba(190, 90, 180, 0.22);
+      }
+      .xchip.selected .check { background: var(--grad); border-color: transparent; color: #fff; animation: popCheck 0.32s cubic-bezier(0.34, 1.6, 0.64, 1) both; }
+      .no-extras {
+        margin-top: 16px; width: 100%; font: inherit; cursor: pointer;
+        background: transparent; border: 1px dashed var(--line-strong); color: var(--ink-soft);
+        border-radius: var(--radius); padding: 14px; font-size: 15.5px; font-weight: 500;
+        transition: border-color 0.2s ease, color 0.2s ease;
+      }
+      .no-extras:hover { border-color: var(--pink); color: var(--ink); }
+
+      /* ---------- Policy — "Good to know" ---------- */
+      .pol { text-align: left; }
+      .pol h4 { margin: 0 0 6px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lilac); font-weight: 600; font-family: "Jost", sans-serif; }
+      .pol ul { margin: 0; padding-left: 18px; color: var(--ink-soft); font-size: 13.5px; line-height: 1.5; }
+      .pol li { margin-top: 4px; }
+      .pol li:first-child { margin-top: 0; }
+      .pol li.dep { color: var(--pink-soft); font-weight: 500; }
+      .appt-card .pol { margin-top: 14px; padding-top: 13px; border-top: 1px solid var(--line); }
+      .pol-confirm { margin-top: 18px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(43, 23, 63, 0.55); padding: 15px 17px; }
+
+      /* ---------- Inspo block ---------- */
+      .inspo {
+        margin-top: 18px; padding: 17px 16px; text-align: left;
+        border: 1px solid rgba(240, 131, 184, 0.4); border-radius: var(--radius);
+        background: var(--grad-soft);
+      }
+      .inspo .i-title { font-family: "Playfair Display", Georgia, serif; font-size: 19px; font-weight: 600; }
+      .inspo p { margin: 6px 0 0; font-size: 14.5px; color: var(--ink-soft); line-height: 1.5; }
+      .inspo .btn { margin-top: 13px; width: 100%; }
 
       /* ---------- Confirmation ---------- */
       .confirm { text-align: center; padding-top: 30px; }
@@ -368,6 +428,8 @@
       .btn-ghost { background: transparent; border-color: var(--line-strong); color: var(--ink-soft); }
       .btn-ghost:hover { border-color: var(--pink); color: var(--ink); }
       .btn-back { padding: 14px 18px; flex: none; }
+      :focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+      .field input:focus-visible, .field textarea:focus-visible { outline: 2px solid var(--pink); outline-offset: 1px; }
       @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
         body::before { animation: none !important; }
@@ -402,8 +464,18 @@
           <div id="serviceList"></div>
         </section>
 
-        <!-- STEP 2 : DATE & TIME -->
+        <!-- STEP 2 : EXTRAS -->
         <section class="step" id="step-2">
+          <div class="step-head">
+            <h2>Add a little extra</h2>
+            <p>Optional finishing touches for your set — tap to add, tap again to take one off. Totally fine to skip this step.</p>
+          </div>
+          <div class="extras" id="extrasList"></div>
+          <button class="no-extras" id="btnNoExtras" type="button">No extras, thanks →</button>
+        </section>
+
+        <!-- STEP 3 : DATE & TIME -->
+        <section class="step" id="step-3">
           <div class="step-head">
             <h2>When works for you?</h2>
             <p>Des takes appointments five days a week — Tuesdays and Wednesdays are her days off.</p>
@@ -418,8 +490,8 @@
           <div class="no-slots" id="noSlots" hidden>No times left this day for that service length — try the next open day.</div>
         </section>
 
-        <!-- STEP 3 : DETAILS -->
-        <section class="step" id="step-3">
+        <!-- STEP 4 : DETAILS -->
+        <section class="step" id="step-4">
           <div class="step-head">
             <h2>Almost there</h2>
             <p>Almost done — Des just needs to know who’s coming and how to reach you.</p>
@@ -478,11 +550,17 @@
               <label for="inNotes">Notes for Des <span class="opt">— optional</span></label>
               <textarea id="inNotes" placeholder="Inspo photos you’re bringing, design ideas, colors you love…"></textarea>
             </div>
+
+            <div class="inspo" id="inspoBlock" hidden>
+              <div class="i-title">Have an inspo pic?</div>
+              <p>Text it to Des so she can quote it right — custom work is priced from your photos, and seeing it ahead means no surprises at your appointment.</p>
+              <a class="btn btn-primary" id="inspoBtn" href="#">Text Des your inspo pic</a>
+            </div>
           </form>
         </section>
 
-        <!-- STEP 4 : CONFIRMATION -->
-        <section class="step" id="step-4">
+        <!-- STEP 5 : CONFIRMATION -->
+        <section class="step" id="step-5">
           <div class="confirm" id="confirmBox" style="position:relative">
             <div class="checkwrap" aria-hidden="true">
               <div class="ring"></div>
@@ -505,6 +583,10 @@
               </div>
               <div class="confirm-rows" id="confirmRows"></div>
             </div>
+            <div class="pol pol-confirm" id="ccPolicy" hidden>
+              <h4>Good to know</h4>
+              <ul id="ccPolicyList"></ul>
+            </div>
             <p class="text-note" id="textNote"></p>
             <p class="disclaimer">This is a design preview of booking on Des’s own site — no real appointment has been made.</p>
             <div class="confirm-actions">
@@ -520,6 +602,10 @@
           <div class="ac-top" id="acTop"><p class="ac-empty">Pick a service and your appointment will build itself here — date, time, and total as you go.</p></div>
           <div class="ac-rows" id="acRows"></div>
           <div class="ac-total" id="acTotalRow" hidden><span class="k">Total</span><span class="v" id="acTotal">—</span></div>
+          <div class="pol" id="acPolicy" hidden>
+            <h4>Good to know</h4>
+            <ul id="acPolicyList"></ul>
+          </div>
         </div>
       </aside>
       </div>
@@ -573,11 +659,25 @@
       var HOURS = { 0: [11 * 60, 19 * 60], 1: [10 * 60, 19 * 60], 2: null, 3: null, 4: [10 * 60, 19 * 60], 5: [9 * 60, 19 * 60], 6: [9 * 60, 19 * 60] };
       var REMOVAL = { price: 20, mins: 20 };
       var LOCATION = "Inside 213 Beauty Studio, 412 W Whittier Blvd, Montebello";
+      var DES_TEXT = "13233795836"; /* +1 (323) 379-5836 */
+
+      /* Step-2 extras — chips for nail services. Product Removal is NOT here:
+         it stays the Details-step policy toggle (+$20 / +20 min). */
+      var EXTRAS = [
+        { id: "art",        name: "Nail Art",      sub: "Hand-painted designs, gems & charms — priced by design", price: 15, plus: true,  mins: 15 },
+        { id: "chrome",     name: "Chrome Finish", sub: "Mirror chrome over any color",                           price: 10, plus: false, mins: 10 },
+        { id: "frenchtips", name: "French Tips",   sub: "Classic white or a colored French finish",                 price: 10, plus: false, mins: 10 }
+      ];
+      var EXTRAS_BY_ID = {};
+      EXTRAS.forEach(function (x) { EXTRAS_BY_ID[x.id] = x; });
+      /* Services the extras step applies to: sets, manicures, overlays, pedicures. */
+      var NAIL_SERVICES = { french: 1, gelx: 1, solid: 1, custom: 1, fill: 1, overlay: 1, hardgel: 1, rusgel: 1, gelmani: 1, nailart: 1, drypedi: 1, basicpedi: 1, luxpedi: 1 };
 
       /* ================= State ================= */
       var state = {
         step: 1,
         serviceId: null,
+        extras: [],
         dateISO: null,
         slotMin: null,
         removal: false,
@@ -681,19 +781,27 @@
       }
 
       function service() { return state.serviceId ? ALL[state.serviceId] : null; }
+      function extrasApply() { var s = service(); return !!s && !!NAIL_SERVICES[s.id]; }
+      function chosenExtras() {
+        if (!extrasApply()) return [];
+        return state.extras.map(function (id) { return EXTRAS_BY_ID[id]; }).filter(Boolean);
+      }
+      function extrasMins() { return chosenExtras().reduce(function (a, x) { return a + x.mins; }, 0); }
+      function extrasPrice() { return chosenExtras().reduce(function (a, x) { return a + x.price; }, 0); }
       function totalMins() {
         var s = service(); if (!s) return 0;
-        return s.mins + (state.removal ? REMOVAL.mins : 0);
+        return s.mins + extrasMins() + (state.removal ? REMOVAL.mins : 0);
       }
       function totalPrice() {
         var s = service(); if (!s) return null;
-        var p = s.price + (state.removal ? REMOVAL.price : 0);
-        return { amount: p, plus: !!s.plus };
+        var p = s.price + extrasPrice() + (state.removal ? REMOVAL.price : 0);
+        var plus = !!s.plus || chosenExtras().some(function (x) { return x.plus; });
+        return { amount: p, plus: plus };
       }
       function endMin() { return state.slotMin == null ? null : state.slotMin + totalMins(); }
 
       /* ================= Progress ================= */
-      var STEP_LABELS = ["Service", "Date & Time", "Your Details", "Done"];
+      var STEP_LABELS = ["Service", "Extras", "Date & Time", "Details", "Done"];
       function renderProgress() {
         var nav = $("progress");
         nav.innerHTML = "";
@@ -767,9 +875,11 @@
             b.addEventListener("click", function () {
               if (state.serviceId !== s.id) {
                 state.serviceId = s.id;
+                state.extras = [];
                 state.slotMin = null; /* duration changed — recheck the slot */
               }
               renderServices();
+              renderExtras();
               updateSummary();
             });
             wrap.appendChild(b);
@@ -778,7 +888,51 @@
         });
       }
 
-      /* ================= Step 2 : days & slots ================= */
+      /* ================= Step 2 : extras ================= */
+      function renderExtras() {
+        var host = $("extrasList");
+        host.innerHTML = "";
+        EXTRAS.forEach(function (x) {
+          /* Never offer French Tips on a set that's already French, or Nail Art on the art add-on itself. */
+          if (x.id === "frenchtips" && state.serviceId === "french") return;
+          if (x.id === "art" && state.serviceId === "nailart") return;
+          var on = state.extras.indexOf(x.id) >= 0;
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "xchip" + (on ? " selected" : "");
+          b.setAttribute("aria-pressed", on ? "true" : "false");
+          var main = document.createElement("div");
+          main.className = "x-main";
+          var nm = document.createElement("div");
+          nm.className = "x-name"; nm.textContent = x.name;
+          var sb = document.createElement("div");
+          sb.className = "x-sub"; sb.textContent = x.sub;
+          main.appendChild(nm); main.appendChild(sb);
+          var meta = document.createElement("div");
+          meta.className = "x-meta";
+          meta.innerHTML = (x.plus ? "<small>From</small>" : "") + "+$" + x.price + "<small>+" + x.mins + " min</small>";
+          var chk = document.createElement("div");
+          chk.className = "check";
+          chk.innerHTML = '<svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5 L5.8 10.5 L11.5 3.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+          b.appendChild(main); b.appendChild(meta); b.appendChild(chk);
+          b.addEventListener("click", function () {
+            var i = state.extras.indexOf(x.id);
+            if (i >= 0) state.extras.splice(i, 1); else state.extras.push(x.id);
+            state.slotMin = null; /* duration changed — recheck the slot */
+            renderExtras();
+            updateSummary();
+          });
+          host.appendChild(b);
+        });
+      }
+      $("btnNoExtras").addEventListener("click", function () {
+        state.extras = [];
+        renderExtras();
+        updateSummary();
+        goTo(3);
+      });
+
+      /* ================= Step 3 : days & slots ================= */
       var DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
       var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
       function next14() {
@@ -794,7 +948,7 @@
         var d = fromISO(iso), hrs = HOURS[d.getDay()];
         if (!hrs) return [];
         var open = hrs[0], close = hrs[1];
-        var last = Math.floor((close - s.mins) / 30) * 30;
+        var last = Math.floor((close - totalMins()) / 30) * 30;
         var now = new Date(), isToday = iso === toISO(now);
         var nowMin = now.getHours() * 60 + now.getMinutes();
         var out = [];
@@ -895,7 +1049,7 @@
           $("acRows").innerHTML = "";
           $("abSub").textContent = "Pick a service";
         } else {
-          if (state.step === 4) chip.classList.remove("show"); else chip.classList.add("show");
+          if (state.step === 5) chip.classList.remove("show"); else chip.classList.add("show");
           $("sumName").textContent = s.name;
           var tp = totalPrice();
           $("sumMeta").innerHTML =
@@ -912,6 +1066,7 @@
           } else { when.classList.remove("show"); }
           var add = $("sumAdd");
           var bits = [];
+          chosenExtras().forEach(function (x) { bits.push("+ " + x.name + " ($" + x.price + " · " + x.mins + " min)"); });
           if (state.removal) bits.push("+ Product Removal ($20 · 20 min)");
           if (state.fill) bits.push("Fill of Des’s work (≤31 days)");
           if (bits.length) { add.textContent = bits.join("  ·  "); add.classList.add("show"); }
@@ -939,6 +1094,7 @@
           rows.push(["Date", state.dateISO ? shortDate(state.dateISO) : "Pick a day"]);
           rows.push(["Time", state.slotMin != null ? fmtTime(state.slotMin) + " – " + fmtTime(endMin()) : "Pick a time"]);
           rows.push(["Duration", fmtDur(totalMins()) + (s.plus ? "+" : "")]);
+          chosenExtras().forEach(function (x) { rows.push(["Extra", x.name + " · +$" + x.price]); });
           if (state.removal) rows.push(["Add-on", "Product Removal · +$20"]);
           if (state.fill) rows.push(["Add-on", "Fill of Des’s work (≤31 days)"]);
           rows.push(["With", "Des · 213 Beauty Studio"]);
@@ -953,14 +1109,59 @@
           $("acTotalRow").hidden = false;
           flipEl($("slotsEnds"));
         }
+        renderPolicy();
+        renderInspo();
         /* Action bar state */
         var next = $("btnNext"), back = $("btnBack");
         back.hidden = state.step === 1;
-        next.textContent = state.step === 3 ? "Confirm booking" : "Continue";
-        if (state.step === 1) next.disabled = !s;
-        else if (state.step === 2) next.disabled = !(state.dateISO && state.slotMin != null);
-        else next.disabled = false;
+        if (state.step === 1) { next.disabled = !s; next.textContent = s ? "Continue" : "Pick a service"; }
+        else if (state.step === 2) { next.disabled = false; next.textContent = "Continue"; }
+        else if (state.step === 3) { next.disabled = !(state.dateISO && state.slotMin != null); next.textContent = "Continue"; }
+        else { next.disabled = false; next.textContent = "Confirm booking"; }
         updateEnds();
+      }
+
+      /* ================= Policy ("Good to know") + inspo ================= */
+      /* Des's known rules only — no cancellation/no-show terms (she hasn't published any). */
+      function fillPolicyList(ul) {
+        ul.innerHTML = "";
+        [
+          "Come with bare nails, unless you're booked for a fill.",
+          "Have product on? Product Removal is added (+$20), so there's time to take it off safely.",
+          "Fills are for Des's own sets, within 31 days and with at most 1 nail missing.",
+          "Custom sets are quoted from your inspo photos."
+        ].forEach(function (t) {
+          var li = document.createElement("li");
+          li.textContent = t;
+          ul.appendChild(li);
+        });
+        if (state.serviceId === "overlay") {
+          var dep = document.createElement("li");
+          dep.className = "dep";
+          dep.textContent = "Overlay deposit: $50 (due at booking, applied to your total).";
+          ul.appendChild(dep);
+        }
+      }
+      function renderPolicy() {
+        var has = !!service();
+        $("acPolicy").hidden = !has;
+        $("ccPolicy").hidden = !has;
+        if (has) { fillPolicyList($("acPolicyList")); fillPolicyList($("ccPolicyList")); }
+      }
+      function inspoApplies() {
+        var s = service(); if (!s) return false;
+        return s.id === "custom" || s.id === "nailart" || state.extras.indexOf("art") >= 0;
+      }
+      function renderInspo() {
+        var show = inspoApplies();
+        $("inspoBlock").hidden = !show;
+        if (!show) return;
+        var s = service();
+        var when = state.dateISO && state.slotMin != null
+          ? " for " + shortDate(state.dateISO) + " at " + fmtTime(state.slotMin)
+          : "";
+        var body = "Hi Des! I just booked " + s.name + when + " — here's my inspo pic:";
+        $("inspoBtn").href = "sms:+" + DES_TEXT + "?&body=" + encodeURIComponent(body);
       }
 
       /* ================= Navigation ================= */
@@ -968,17 +1169,18 @@
         var prev = state.step;
         var dir = n >= prev ? "enter-fwd" : "enter-back";
         state.step = n;
-        for (var i = 1; i <= 4; i++) {
+        for (var i = 1; i <= 5; i++) {
           var sec = $("step-" + i);
           sec.classList.toggle("active", i === n);
           sec.classList.remove("enter-fwd", "enter-back");
           if (i === n) { void sec.offsetWidth; sec.classList.add(dir); }
         }
-        $("actionbar").classList.toggle("hide", n === 4);
+        $("actionbar").classList.toggle("hide", n === 5);
         renderProgress();
-        if (n === 2) { renderDays(); renderSlots(); }
+        if (n === 2) { renderExtras(); }
+        if (n === 3) { renderDays(); renderSlots(); }
         updateSummary();
-        if (n === 4) {
+        if (n === 5) {
           /* Restart checkmark draw, then celebrate once */
           var cw = document.querySelector(".checkwrap");
           if (cw) { var clone = cw.innerHTML; cw.innerHTML = ""; void cw.offsetWidth; cw.innerHTML = clone; }
@@ -986,14 +1188,18 @@
         }
         window.scrollTo({ top: 0, behavior: REDUCED ? "auto" : "smooth" });
       }
-      $("btnBack").addEventListener("click", function () { if (state.step > 1) goTo(state.step - 1); });
+      $("btnBack").addEventListener("click", function () {
+        if (state.step === 3 && !extrasApply()) goTo(1); /* extras step was skipped */
+        else if (state.step > 1) goTo(state.step - 1);
+      });
       $("btnNext").addEventListener("click", function () {
-        if (state.step === 1 && state.serviceId) goTo(2);
-        else if (state.step === 2 && state.slotMin != null) goTo(3);
-        else if (state.step === 3) confirmBooking();
+        if (state.step === 1 && state.serviceId) goTo(extrasApply() ? 2 : 3);
+        else if (state.step === 2) goTo(3);
+        else if (state.step === 3 && state.slotMin != null) goTo(4);
+        else if (state.step === 4) confirmBooking();
       });
 
-      /* ================= Step 3 : details ================= */
+      /* ================= Step 4 : details ================= */
       $("tglRemoval").addEventListener("change", function (e) {
         state.removal = e.target.checked;
         $("removalNote").classList.toggle("show", state.removal);
@@ -1035,7 +1241,7 @@
         return ok;
       }
 
-      /* ================= Step 4 : confirmation ================= */
+      /* ================= Step 5 : confirmation ================= */
       function makeRef() {
         var chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
         var seed = hashStr(state.serviceId + state.dateISO + state.slotMin + $("inPhone").value + Date.now());
@@ -1053,10 +1259,13 @@
         $("confirmTitle").textContent = "You’re booked, " + first + "!";
         $("confirmRef").textContent = state.ref;
         $("ccService").textContent = s.name;
-        var addBits = [];
-        if (state.removal) addBits.push("with Product Removal");
-        if (state.fill) addBits.push("fill of Des’s work (≤31 days)");
-        $("ccAdd").textContent = addBits.length ? "Booked " + addBits.join(" · ") : "with Des · Luxury Nails by Des";
+        var names = [];
+        chosenExtras().forEach(function (x) { names.push(x.name); });
+        if (state.removal) names.push("Product Removal");
+        if (names.length && state.fill) $("ccAdd").textContent = "Booked with " + names.join(" · ") + " · fill of Des’s work (≤31 days)";
+        else if (names.length) $("ccAdd").textContent = "Booked with " + names.join(" · ");
+        else if (state.fill) $("ccAdd").textContent = "Booked fill of Des’s work (≤31 days)";
+        else $("ccAdd").textContent = "with Des · Luxury Nails by Des";
         var tp = totalPrice();
         var rows = [
           ["Date", fullDate(state.dateISO)],
@@ -1065,6 +1274,7 @@
           ["Total", "From $" + tp.amount + (tp.plus ? "+" : ""), true],
           ["Location", LOCATION]
         ];
+        if (chosenExtras().length) rows.push(["Extras", chosenExtras().map(function (x) { return x.name; }).join(" · ") + " (+$" + extrasPrice() + ")"]);
         if (notes) rows.push(["Notes for Des", notes]);
         rows.push(["Booked for", first + " " + last]);
         var host = $("confirmRows");
@@ -1077,17 +1287,18 @@
           host.appendChild(row);
         });
         $("textNote").textContent = "A text confirmation would be sent to " + phone + ".";
-        goTo(4);
+        goTo(5);
       }
       $("btnAgain").addEventListener("click", function () {
         confettiFired = false;
         state.serviceId = null; state.dateISO = null; state.slotMin = null;
-        state.removal = false; state.fill = false; state.ref = null;
+        state.removal = false; state.fill = false; state.ref = null; state.extras = [];
         $("tglRemoval").checked = false; $("tglFill").checked = false;
         $("removalNote").classList.remove("show");
         $("inFirst").value = ""; $("inLast").value = ""; $("inPhone").value = ""; $("inNotes").value = "";
         ["f-first", "f-last", "f-phone"].forEach(function (id) { $(id).classList.remove("error"); });
         renderServices();
+        renderExtras();
         goTo(1);
       });
 
@@ -1104,6 +1315,7 @@
 
       /* ================= Init ================= */
       renderServices();
+      renderExtras();
       renderProgress();
       updateSummary();
     </script>
